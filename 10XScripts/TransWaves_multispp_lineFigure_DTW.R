@@ -404,7 +404,7 @@ plot_piecewise <- function(raw_x, raw_y, splits) {
 
 # Add Sig features to plot
 nlines=1
-#pdf("DTW_Three_Spp_Wave_Lines_w_Sig.pdf", width=7, height=9)
+pdf("RR_Three_Spp_Wave_Lines_w_peaktrough.pdf", width=7, height=9)
 lmat <- cbind(c(1:nlines, nlines+1:nspp), c(1:nlines, nlines+1:nspp))
 layout(lmat, width=c(1,1), heights=c(rep(0.1, times=nlines), rep(1, times=nspp)))
 
@@ -424,7 +424,7 @@ thing <- smooth.spline(pseudotimes$pb, bergei_up_s)
 lines(thing$x, thing$y, lwd=2)
 
 # sig
-plot_piecewise(pseudotimes$pb, bergei_up_s, splits)
+#plot_piecewise(pseudotimes$pb, bergei_up_s, splits)
 
 # KNOWLESI
 par(mar=c(0,4,0,1))
@@ -436,7 +436,7 @@ bit1 <- pseudotimes$pk>-1
 thing1 <- smooth.spline(pseudotimes$pk[bit1], knowlesi_up_s[bit1], spar=0.9)
 lines(thing1$x, thing1$y, lwd=2)
 # sig
-plot_piecewise(pseudotimes$pk, knowlesi_up_s, splits)
+#plot_piecewise(pseudotimes$pk, knowlesi_up_s, splits)
 
 #FALCIPARUM
 par(mar=c(4,4,0,1))
@@ -448,9 +448,9 @@ bit1 <- pseudotimes$pf > 0.5 & pseudotimes$pf < 6.5
 thing1 <- smooth.spline(pseudotimes$pf[bit1], falciparum_up_s[bit1], spar=0.9)
 lines(thing1$x, thing1$y, lwd=2)
 # sig
-plot_piecewise(pseudotimes$pf, falciparum_up_s, splits)
+#plot_piecewise(pseudotimes$pf, falciparum_up_s, splits)
 
-#dev.off()
+dev.off()
 
 
 # DE genes for pieces are the same across species?
@@ -649,21 +649,21 @@ pb_pretty <- data.frame(pb_pretty);
 pb_pretty$pf <- ortho[match(rownames(pb_pretty), ortho$pbanka), "pfalci"]
 pb_pretty$pk <- ortho[match(rownames(pb_pretty), ortho$pbanka), "pknowl"]
 #pb_pretty$in_heatmap <- rownames(pb_pretty) %in% consistent_genes
-write.table(pb_pretty, file="RR_pb_table_heatmap.csv", sep=",")
+write.table(pb_pretty, file="RR_full_pb_table.csv", sep=",")
 
 pk_pretty <- prettify(MAT_pk)
 #colnames(pk_pretty) <- as.character(time_mid)
 pk_pretty <- data.frame(pk_pretty);
 pk_pretty$pf <- ortho[match(rownames(pk_pretty), ortho$pknowl), "pfalci"]
 pk_pretty$pb <- ortho[match(rownames(pk_pretty), ortho$pknowl), "pbanka"]
-write.table(pk_pretty, file="RR_pk_table_heatmap.csv", sep=",")
+write.table(pk_pretty, file="RR_full_pk_table.csv", sep=",")
 
 pf_pretty <- prettify(MAT_pf)
 #colnames(pf_pretty) <- as.character(time_mid)
 pf_pretty <- data.frame(pf_pretty);
 pf_pretty$pk <- ortho[match(rownames(pf_pretty), ortho$pfalci), "pknowl"]
 pf_pretty$pb <- ortho[match(rownames(pf_pretty), ortho$pfalci), "pbanka"]
-write.table(pf_pretty, file="RR_pf_table_heatmap.csv", sep=",")
+write.table(pf_pretty, file="RR_full_pf_table.csv", sep=",")
 
 pb_pretty <- pb_pretty[match(rownames(pb_trip), rownames(pb_pretty)),]
 pk_pretty <- pk_pretty[match(pb_pretty$pk, rownames(pk_pretty)),]
